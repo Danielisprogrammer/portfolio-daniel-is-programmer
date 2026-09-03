@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { translations } from '../data/translations';
-import { Mail, MessageSquare, Send, Terminal, Globe, CheckCircle } from 'lucide-react';
+import { Mail, MessageSquare, Send, CheckCircle } from 'lucide-react';
 
 export const Contact = () => {
   const [lang] = useState(() => localStorage.getItem('lang') || 'fr');
@@ -11,14 +11,21 @@ export const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const mailtoLink = `mailto:kengned776@gmail.com?subject=Contact de ${encodeURIComponent(formData.name)} (${encodeURIComponent(formData.email)})&body=${encodeURIComponent(formData.message)}`;
+    
+    const whatsappText = encodeURIComponent(
+      `*Nouveau message depuis le Portfolio*\n\n*Nom:* ${formData.name}\n*Email:* ${formData.email}\n*Message:* ${formData.message}`
+    );
+    window.open(`https://wa.me/237690309313?text=${whatsappText}`, '_blank');
+
+    const mailtoLink = `mailto:kengned776@gmail.com?subject=Contact Portfolio de ${encodeURIComponent(formData.name)}&body=${encodeURIComponent(formData.message)}`;
     window.location.href = mailtoLink;
+
     setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
+    setTimeout(() => setSubmitted(false), 6000);
   };
 
-  const handleWhatsApp = () => {
-    const text = encodeURIComponent("Bonjour Daniel Vahid Kengne, je te contacte depuis ton portfolio pour un projet !");
+  const handleDirectWhatsApp = () => {
+    const text = encodeURIComponent("Bonjour Daniel Vahid Kengne, je te contacte depuis ton portfolio pour discuter d'un projet !");
     window.open(`https://wa.me/237690309313?text=${text}`, '_blank');
   };
 
@@ -38,58 +45,51 @@ export const Contact = () => {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 max-w-5xl mx-auto">
-        {/* Infos de contact direct & Réseaux */}
         <div className="lg:col-span-5 space-y-6">
-          <div className="custom-card p-8 space-y-6">
-            <h3 className="text-xl font-bold mb-4">Coordonnées</h3>
+          <div className="custom-card p-8 space-y-6" style={{ background: 'var(--card-bg)' }}>
+            <h3 className="text-xl font-bold mb-4">Coordonnées Directes</h3>
             
             <a href="mailto:kengned776@gmail.com" className="flex items-center gap-4 p-4 rounded-xl transition-colors hover:bg-indigo-500/10" style={{ background: 'rgba(255, 255, 255, 0.02)', border: '1px solid var(--card-border)' }}>
               <div className="p-3 rounded-lg bg-indigo-500/20 text-indigo-400">
                 <Mail size={20} />
               </div>
               <div>
-                <span className="text-xs opacity-60 block">Email direct</span>
+                <span className="text-xs opacity-60 block">Email principal</span>
                 <span className="font-semibold text-sm">kengned776@gmail.com</span>
               </div>
             </a>
 
-            <div onClick={handleWhatsApp} className="flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-colors hover:bg-emerald-500/10" style={{ background: 'rgba(255, 255, 255, 0.02)', border: '1px solid var(--card-border)' }}>
+            <div onClick={handleDirectWhatsApp} className="flex items-center gap-4 p-4 rounded-xl cursor-pointer transition-colors hover:bg-emerald-500/10" style={{ background: 'rgba(255, 255, 255, 0.02)', border: '1px solid var(--card-border)' }}>
               <div className="p-3 rounded-lg bg-emerald-500/20 text-emerald-400">
                 <MessageSquare size={20} />
               </div>
               <div>
-                <span className="text-xs opacity-60 block">WhatsApp</span>
+                <span className="text-xs opacity-60 block">WhatsApp direct</span>
                 <span className="font-semibold text-sm">+237 690 309 313</span>
               </div>
             </div>
 
-            <div className="pt-6 border-t flex items-center gap-4" style={{ borderColor: 'var(--card-border)' }}>
-              <a href="https://www.linkedin.com/in/daniel-vahid-kengne" target="_blank" rel="noopener noreferrer" className="p-3 rounded-xl transition-colors hover:bg-indigo-500/10 hover:text-indigo-500" style={{ background: 'var(--card-bg)', border: '1px solid var(--card-border)' }} aria-label="LinkedIn">
-                <Globe size={20} />
-              </a>
-              <a href="https://github.com/Danielisprogrammer" target="_blank" rel="noopener noreferrer" className="p-3 rounded-xl transition-colors hover:bg-indigo-500/10 hover:text-indigo-500" style={{ background: 'var(--card-bg)', border: '1px solid var(--card-border)' }} aria-label="GitHub">
-                <Terminal size={20} />
-              </a>
-              <button onClick={handleWhatsApp} className="flex-grow btn-primary text-xs py-3">
+            <div className="pt-6 border-t flex items-center justify-between" style={{ borderColor: 'var(--card-border)' }}>
+              <span className="text-xs font-mono" style={{ color: 'var(--text-muted)' }}>Dispo pour missions & stages</span>
+              <button onClick={handleDirectWhatsApp} className="btn-primary text-xs py-3 px-4">
                 <MessageSquare size={16} />
-                <span>{t.whatsappBtn}</span>
+                <span>Discuter</span>
               </button>
             </div>
           </div>
         </div>
 
-        {/* Formulaire de contact fonctionnel */}
         <div className="lg:col-span-7">
-          <form onSubmit={handleSubmit} className="custom-card p-8 space-y-6">
+          <form onSubmit={handleSubmit} className="custom-card p-8 space-y-6" style={{ background: 'var(--card-bg)' }}>
             {submitted && (
               <div className="p-4 rounded-xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 flex items-center gap-3 text-sm font-semibold">
                 <CheckCircle size={20} />
-                <span>{t.successMsg}</span>
+                <span>Message transmis avec succès sur WhatsApp et Email !</span>
               </div>
             )}
 
             <div>
-              <label className="block text-xs font-semibold mb-2" style={{ color: 'var(--text-muted)' }}>{t.namePlaceholder}</label>
+              <label className="block text-xs font-semibold mb-2" style={{ color: 'var(--text-muted)' }}>Votre Nom</label>
               <input 
                 type="text" 
                 required
@@ -102,7 +102,7 @@ export const Contact = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold mb-2" style={{ color: 'var(--text-muted)' }}>{t.emailPlaceholder}</label>
+              <label className="block text-xs font-semibold mb-2" style={{ color: 'var(--text-muted)' }}>Votre Email</label>
               <input 
                 type="email" 
                 required
@@ -115,7 +115,7 @@ export const Contact = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-semibold mb-2" style={{ color: 'var(--text-muted)' }}>{t.messagePlaceholder}</label>
+              <label className="block text-xs font-semibold mb-2" style={{ color: 'var(--text-muted)' }}>Votre Message</label>
               <textarea 
                 rows="4" 
                 required
@@ -127,9 +127,9 @@ export const Contact = () => {
               ></textarea>
             </div>
 
-            <button type="submit" className="w-full btn-primary py-4">
+            <button type="submit" className="w-full btn-primary py-4 font-bold flex items-center justify-center gap-2">
               <Send size={18} />
-              <span>{t.sendBtn}</span>
+              <span>Envoyer sur WhatsApp & Email</span>
             </button>
           </form>
         </div>

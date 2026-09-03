@@ -1,56 +1,62 @@
 export const projectsData = [
   {
     id: 1,
-    title: "SanteScope",
-    description: "Application web interactive (React & Vite) intégrant l'API Wikipédia pour des recherches médicales et de santé instantanées, avec interface responsive haut de gamme.",
-    techs: ["React", "Vite", "Tailwind CSS", "REST API"],
-    liveUrl: "https://github.com/Danielisprogrammer/SanteScope",
-    githubUrl: "https://github.com/Danielisprogrammer/SanteScope",
-    gradient: "from-blue-500/20 via-indigo-500/20 to-cyan-500/20"
+    title: "LexiGhomala'",
+    description: "Application web innovante de traduction et de préservation de la langue locale Ghomala' (Cameroun), facilitant le pont entre le français et nos langues patrimoniales.",
+    techs: ["React", "Node.js", "Tailwind CSS", "Express"],
+    githubUrl: "https://github.com/Danielisprogrammer/LexiGhomala",
+    liveUrl: "https://github.com/Danielisprogrammer/LexiGhomala",
+    downloadUrl: "https://github.com/Danielisprogrammer/LexiGhomala/archive/refs/heads/main.zip",
+    gradient: "from-amber-600 via-orange-600 to-yellow-600"
   },
   {
     id: 2,
-    title: "SIP - Community Management",
-    description: "Plateforme fullstack collaborative (Frontend React/TS + Backend Node.js/Express avec Prisma et PostgreSQL) pour la gestion communautaire déployée sur Render.",
+    title: "SIP - Communauté",
+    description: "Plateforme fullstack de gestion communautaire avec authentification sécurisée, rôles, tableaux de bord et gestion des membres.",
     techs: ["React", "TypeScript", "Node.js", "Prisma", "PostgreSQL"],
-    liveUrl: "https://github.com/Danielisprogrammer/sip-eec-ngousso",
-    githubUrl: "https://github.com/Danielisprogrammer/sip-eec-ngousso",
-    gradient: "from-indigo-500/20 via-purple-500/20 to-pink-500/20"
+    githubUrl: "https://github.com/Danielisprogrammer",
+    liveUrl: "https://sip-eec-ngousso.onrender.com",
+    downloadUrl: "https://github.com/Danielisprogrammer",
+    gradient: "from-indigo-600 via-purple-600 to-pink-600"
   },
   {
     id: 3,
-    title: "LexiGhomala’",
-    description: "Application web culturelle innovante dédiée à la traduction et à la promotion de la langue locale Ghomala’ entre le français et le vernaculaire.",
-    techs: ["JavaScript", "HTML5", "CSS3", "UI/UX Design"],
-    liveUrl: "https://github.com/Danielisprogrammer/LexiGhomala",
-    githubUrl: "https://github.com/Danielisprogrammer/LexiGhomala",
-    gradient: "from-amber-500/20 via-orange-500/20 to-red-500/20"
+    title: "AgroStat Insight Pro",
+    description: "Application Streamlit de visualisation de données agricoles avancées connectée à SQLite et Google Sheets pour l'analyse prédictive.",
+    techs: ["Python", "Streamlit", "SQLite", "Pandas"],
+    githubUrl: "https://github.com/Danielisprogrammer",
+    liveUrl: "https://github.com/Danielisprogrammer",
+    downloadUrl: "https://github.com/Danielisprogrammer",
+    gradient: "from-emerald-600 via-teal-600 to-cyan-600"
   },
   {
     id: 4,
     title: "OptiCash",
-    description: "Application d'optimisation financière et de suivi intelligent des dépenses propulsée par l'IA, hébergée et versionnée sur GitHub.",
-    techs: ["JavaScript", "Node.js", "AI Integration", "Tailwind CSS"],
-    liveUrl: "https://github.com/Danielisprogrammer/OptiCash",
+    description: "Application intelligente de suivi des dépenses et d'optimisation financière personnelle axée sur la gestion budgétaire.",
+    techs: ["React", "Tailwind CSS", "JavaScript", "API"],
     githubUrl: "https://github.com/Danielisprogrammer/OptiCash",
-    gradient: "from-emerald-500/20 via-teal-500/20 to-green-500/20"
+    liveUrl: "https://github.com/Danielisprogrammer/OptiCash",
+    downloadUrl: "https://github.com/Danielisprogrammer/OptiCash/archive/refs/heads/main.zip",
+    gradient: "from-blue-600 via-indigo-600 to-violet-600"
   },
   {
     id: 5,
-    title: "DanSmartIA",
-    description: "Projet logiciel doté de capacités d'intelligence artificielle conversationnelle et de persistance de données en base de données.",
-    techs: ["Python", "Streamlit", "AI API", "Database"],
-    liveUrl: "https://github.com/Danielisprogrammer/DanSmartIA---Projet1",
-    githubUrl: "https://github.com/Danielisprogrammer/DanSmartIA---Projet1",
-    gradient: "from-violet-500/20 via-fuchsia-500/20 to-pink-500/20"
+    title: "SanteScope",
+    description: "Plateforme web interactive intégrant l'API Wikipedia pour la recherche instantanée d'informations médicales et de santé publique.",
+    techs: ["React", "Vite", "Tailwind CSS", "API REST"],
+    githubUrl: "https://github.com/Danielisprogrammer",
+    liveUrl: "https://github.com/Danielisprogrammer",
+    downloadUrl: "https://github.com/Danielisprogrammer",
+    gradient: "from-rose-600 via-red-600 to-orange-600"
   },
   {
     id: 6,
-    title: "AgroStat Insight Pro",
-    description: "Application web de visualisation de données agricoles connectée à SQLite et Google Sheets (TP académique INF232 déployée sur Streamlit Cloud).",
-    techs: ["Python", "Streamlit", "SQLite", "Google Sheets API"],
-    liveUrl: "https://github.com/Danielisprogrammer",
-    githubUrl: "https://github.com/Danielisprogrammer",
-    gradient: "from-yellow-500/20 via-amber-500/20 to-orange-500/20"
+    title: "DanSmartIA - Projet 1",
+    description: "Module logiciel intelligent doté de capacités conversationnelles et d'un stockage de données structuré pour l'assistance automatisée.",
+    techs: ["JavaScript", "Node.js", "AI APIs", "Database"],
+    githubUrl: "https://github.com/Danielisprogrammer/DanSmartIA---Projet1",
+    liveUrl: "https://github.com/Danielisprogrammer/DanSmartIA---Projet1",
+    downloadUrl: "https://github.com/Danielisprogrammer/DanSmartIA---Projet1/archive/refs/heads/main.zip",
+    gradient: "from-violet-600 via-purple-600 to-fuchsia-600"
   }
 ];
