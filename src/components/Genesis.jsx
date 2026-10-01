@@ -10,13 +10,13 @@ export const Genesis = () => {
           <span>Vision & Initiative</span>
         </div>
         <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-6">
-          L'Initiative Genesis
+          L'Initiative Genesy Academy
         </h2>
         <p className="text-lg" style={{ color: 'var(--text-muted)' }}>
-          Bien plus qu'un projet : une vision technologique et sociale née à Yaoundé pour autonomiser, éduquer et connecter les talents de demain.
+          Bien plus qu'un projet : une vision technologique et sociale née à Yaoundé pour encardrer, éduquer et connecter les talents de demain.
         </p>
       </div>
-
+      
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
         <div className="lg:col-span-7 space-y-6">
           <div className="custom-card p-8 space-y-6" style={{ background: 'var(--card-bg)' }}>
@@ -31,7 +31,7 @@ export const Genesis = () => {
             </div>
 
             <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-              Genesis incarne ma volonté d'utiliser le développement logiciel non seulement comme un outil professionnel, mais comme un levier d'émancipation. En combinant le tutorat académique, la création d'outils adaptés à notre contexte (comme la valorisation de la langue Ghomala') et des solutions web performantes, Genesis pose les bases d'un écosystème tech durable au Cameroun.
+              Genesis Academy incarne ma volonté d'utiliser mes competences tant sur le plan .......
             </p>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t" style={{ borderColor: 'var(--card-border)' }}>

@@ -20,12 +20,12 @@ export const Footer = () => {
             <Code2 size={16} />
             <span>GitHub</span>
           </a>
-          <a href="https://wa.me/237690309313" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-xl transition-colors hover:text-emerald-400 flex items-center gap-2 text-xs font-mono px-4" style={{ background: 'var(--card-bg)', border: '1px solid var(--card-border)' }}>
+          <a href="https://wa.me/237690309313" target="_blank" rel="noopener noreferrer" className="p-2.5 rounded-xl transition-colors hover:text-green-400 flex items-center gap-2 text-xs font-mono px-4" style={{ background: 'var(--card-bg)', border: '1px solid var(--card-border)' }}>
             <MessageSquare size={16} />
             <span>WhatsApp</span>
           </a>
         </div>
-
+        
         <div className="text-xs text-center sm:text-right" style={{ color: 'var(--text-muted)' }}>
           <p className="flex items-center justify-center sm:justify-end gap-1">
             Conçu avec <Heart size={14} className="text-pink-500 fill-pink-500" /> et Ubuntu

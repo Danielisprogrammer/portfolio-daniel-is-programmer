@@ -23,10 +23,10 @@ export const Navbar = ({ darkMode, setDarkMode }) => {
           </div>
           <div className="flex flex-col">
             <span className="font-bold tracking-tight text-sm sm:text-base">Daniel Kengne</span>
-            <span className="text-[10px] font-mono text-indigo-400">L2 Informatique • UY1</span>
+            <span className="text-[10px] font-mono text-indigo-400">L3 Informatique • UY1</span>
           </div>
         </a>
-
+        
         <div className="hidden md:flex items-center gap-8 text-sm font-medium">
           <a href="#about" className="transition-colors hover:text-indigo-400" style={{ color: 'var(--text-muted)' }}>{t.about}</a>
           <a href="#projects" className="transition-colors hover:text-indigo-400" style={{ color: 'var(--text-muted)' }}>{t.projects}</a>

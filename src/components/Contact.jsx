@@ -95,7 +95,7 @@ export const Contact = () => {
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                placeholder="Ex: Jean Dupont" 
+                placeholder="Ex: Daniel Tachago" 
                 className="w-full px-4 py-3 rounded-xl bg-transparent border text-sm transition-colors focus:border-indigo-500 outline-none"
                 style={{ borderColor: 'var(--card-border)', color: 'var(--text-primary)' }}
               />
@@ -108,12 +108,12 @@ export const Contact = () => {
                 required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                placeholder="Ex: jean@example.com" 
+                placeholder="Ex: daniel@example.com" 
                 className="w-full px-4 py-3 rounded-xl bg-transparent border text-sm transition-colors focus:border-indigo-500 outline-none"
                 style={{ borderColor: 'var(--card-border)', color: 'var(--text-primary)' }}
               />
             </div>
-
+            
             <div>
               <label className="block text-xs font-semibold mb-2" style={{ color: 'var(--text-muted)' }}>Votre Message</label>
               <textarea 

@@ -45,7 +45,7 @@ export const Hero = () => {
         <div className="lg:col-span-7 space-y-8 text-center lg:text-left">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold" style={{ background: 'rgba(99, 102, 241, 0.1)', color: 'var(--accent)', border: '1px solid rgba(99, 102, 241, 0.2)' }}>
             <Terminal size={14} />
-            <span>Étudiant L2 Informatique • Université de Yaoundé 1</span>
+            <span>Étudiant L3 Informatique • Université de Yaoundé 1</span>
           </div>
 
           <div className="space-y-4">
@@ -56,7 +56,7 @@ export const Hero = () => {
               </span>
             </h1>
             <p className="text-lg sm:text-xl font-medium" style={{ color: 'var(--text-muted)' }}>
-              Junior Fullstack Developer & Tuteur Académique. Je conçois des architectures web modernes, des solutions IA et valorise nos langues locales à travers le code.
+              Junior Fullstack Developer & Encadreur scolaire. Je conçois des architectures web modernes, j'aide les jeunes eleves dans leurs cursus scolaire.
             </p>
           </div>
 
@@ -67,17 +67,17 @@ export const Hero = () => {
             </a>
             <a href="#genesis" className="px-8 py-4 rounded-xl text-sm font-bold transition-all hover:scale-105 flex items-center gap-2" style={{ background: 'var(--card-bg)', border: '1px solid var(--card-border)', color: 'var(--text-primary)' }}>
               <Sparkles size={18} className="text-indigo-400" />
-              <span>Découvrir Genesis</span>
+              <span>Découvrir GENESIS ACADEMY</span>
             </a>
           </div>
 
           <div className="grid grid-cols-3 gap-4 pt-8 border-t" style={{ borderColor: 'var(--card-border)' }}>
             <div>
-              <span className="block text-2xl font-black text-indigo-500">6+</span>
+              <span className="block text-2xl font-black text-indigo-500">10+</span>
               <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Projets Web</span>
             </div>
             <div>
-              <span className="block text-2xl font-black text-purple-500">L2</span>
+              <span className="block text-2xl font-black text-purple-500">L3</span>
               <span className="text-xs" style={{ color: 'var(--text-muted)' }}>Informatique UY1</span>
             </div>
             <div>
@@ -98,7 +98,7 @@ export const Hero = () => {
                   <span className="w-3 h-3 rounded-full bg-yellow-500 inline-block"></span>
                   <span className="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span>
                 </div>
-                <span className="text-xs font-mono opacity-60">daniel@ubuntu:~$ profile</span>
+                <span className="text-xs font-mono opacity-60">Daniel is Programmer</span>
               </div>
 
               <div className="relative h-72 w-full rounded-2xl overflow-hidden bg-gradient-to-br from-indigo-950 to-slate-900 flex items-center justify-center group">
