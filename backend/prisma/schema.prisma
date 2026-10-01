@@ -1,0 +1,36 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Skill {
+  id          Int      @id @default(autoincrement())
+  name        String
+  category    String   // frontend, backend, database, tools
+  level       Int      @default(1) // 1-5
+  icon        String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Project {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  category    String   // fullstack, frontend, backend, data
+  badge       String?
+  githubUrl   String?
+  liveUrl     String?
+  imageUrl    String?
+  featured    Boolean  @default(false)
+  gradient    String   @default("from-indigo-600 via-purple-600 to-pink-600")
+  techs       String   @default("[]") // JSON string array
+  startDate   String?
+  endDate     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

@@ -2,18 +2,6 @@
 
 @layer base {
   :root {
-    --bg-primary: #030712; /* Noir de jais profond ultra moderne */
-    --bg-secondary: #0b0f19;
-    --text-primary: #f8fafc;
-    --text-muted: #94a3b8;
-    --card-bg: rgba(17, 24, 39, 0.7);
-    --card-border: rgba(255, 255, 255, 0.08);
-    --card-border-hover: rgba(99, 102, 241, 0.5);
-    --accent: #6366f1;
-    --accent-glow: rgba(99, 102, 241, 0.35);
-  }
-
-  .light {
     --bg-primary: #f8fafc;
     --bg-secondary: #ffffff;
     --text-primary: #0f172a;
@@ -23,6 +11,18 @@
     --card-border-hover: rgba(99, 102, 241, 0.4);
     --accent: #4f46e5;
     --accent-glow: rgba(79, 70, 229, 0.2);
+  }
+
+  .dark {
+    --bg-primary: #030712;
+    --bg-secondary: #0b0f19;
+    --text-primary: #f8fafc;
+    --text-muted: #94a3b8;
+    --card-bg: rgba(17, 24, 39, 0.7);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --card-border-hover: rgba(99, 102, 241, 0.5);
+    --accent: #6366f1;
+    --accent-glow: rgba(99, 102, 241, 0.35);
   }
 
   html {
@@ -38,91 +38,75 @@
   }
 }
 
-/* Effets Avancés & Animations Pro */
-.glass-nav {
-  background-color: var(--card-bg);
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--card-border);
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.hero-glow {
-  position: absolute;
-  width: 500px;
-  height: 500px;
-  background: radial-gradient(circle, var(--accent-glow) 0%, rgba(0,0,0,0) 70%);
-  filter: blur(60px);
-  z-index: -1;
-  pointer-events: none;
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
 }
 
-.custom-card {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-  backdrop-filter: blur(10px);
-  border-radius: 1.25rem;
-  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-  position: relative;
-  overflow: hidden;
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }
 
-.custom-card::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(120deg, transparent, rgba(99, 102, 241, 0.1), transparent);
-  opacity: 0;
-  transition: opacity 0.5s ease;
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(99, 102, 241, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(99, 102, 241, 0.6); }
 }
 
-.custom-card:hover {
-  transform: translateY(-6px) scale(1.01);
-  border-color: var(--card-border-hover);
-  box-shadow: 0 20px 40px -15px var(--accent-glow);
+.animate-fade-in-up {
+  animation: fadeInUp 0.6s ease-out forwards;
 }
 
-.custom-card:hover::before {
-  opacity: 1;
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
 }
 
-.btn-primary {
-  background: linear-gradient(135deg, #6366f1, #4f46e5);
-  color: #ffffff;
-  padding: 0.9rem 2.2rem;
-  border-radius: 0.85rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  box-shadow: 0 8px 25px var(--accent-glow);
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  text-decoration: none;
+.animate-slide-in-right {
+  animation: slideInRight 0.5s ease-out forwards;
 }
 
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 12px 30px var(--accent-glow);
-  filter: brightness(1.1);
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
 }
 
-.btn-outline {
-  border: 1px solid var(--card-border);
-  color: var(--text-primary);
-  background: var(--card-bg);
-  padding: 0.9rem 2.2rem;
-  border-radius: 0.85rem;
-  font-weight: 600;
-  transition: all 0.3s ease;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  text-decoration: none;
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
 }
 
-.btn-outline:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  transform: translateY(-2px);
+::-webkit-scrollbar-track {
+  background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--accent);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-glow);
+}
+
+/* Selection */
+::selection {
+  background: var(--accent);
+  color: white;
 }

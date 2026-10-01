@@ -6,7 +6,7 @@ export const ThemeProvider = ({ children }) => {
   const [darkMode, setDarkMode] = useState(() => {
     const saved = localStorage.getItem('theme');
     if (saved !== null) return JSON.parse(saved);
-    return true; // Mode sombre par défaut pour un look tech ultra-propre
+    return true;
   });
 
   useEffect(() => {

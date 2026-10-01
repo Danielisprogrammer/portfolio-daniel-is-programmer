@@ -1,22 +1,64 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   ExternalLink, Code2, GraduationCap, Briefcase, 
   User, Mail, MapPin, Terminal, Cpu, Database, Award, BookOpen, Layers, ShieldCheck, Sparkles, Send, 
-  Palette, Phone, MessageSquare, CheckCircle2, Flame, RefreshCw, Star, Globe
+  Palette, Phone, MessageSquare, CheckCircle2, Flame, RefreshCw, Star, Globe, Sun, Moon, Shield, Plus, Trash2, X, LogOut, Loader2, Settings
 } from 'lucide-react';
 
 import profileImage from './assets/photo-daniel.jpeg';
+import { useApi } from './hooks/useApi';
+import { AdminPanel } from './components/AdminPanel';
 
 export default function Portfolio() {
   const [filter, setFilter] = useState('all');
-  const [themeColor, setThemeColor] = useState('red'); // 'red', 'emerald', 'violet', 'blue'
+  const [themeColor, setThemeColor] = useState('red');
   const [formSent, setFormSent] = useState(false);
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [darkMode, setDarkMode] = useState(() => {
+    const saved = localStorage.getItem('theme');
+    if (saved !== null) return JSON.parse(saved);
+    return true;
+  });
+  const [showAdmin, setShowAdmin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
 
-  // Thèmes dynamiques complets
+  const { data: apiProjects, loading: projectsLoading } = useApi('/projects');
+  const { data: apiSkills, loading: skillsLoading } = useApi('/skills');
+
+  useEffect(() => {
+    localStorage.setItem('theme', JSON.stringify(darkMode));
+    const root = document.documentElement;
+    if (darkMode) {
+      root.classList.remove('light');
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+      root.classList.add('light');
+    }
+  }, [darkMode]);
+
+  useEffect(() => {
+    const adminStatus = sessionStorage.getItem('isAdmin');
+    if (adminStatus === 'true') setIsAdmin(true);
+  }, []);
+
+  const toggleTheme = () => setDarkMode(!darkMode);
+
+  const handleAdminLogin = () => {
+    setIsAdmin(true);
+    sessionStorage.setItem('isAdmin', 'true');
+    setShowAdmin(true);
+  };
+
+  const handleAdminLogout = () => {
+    setIsAdmin(false);
+    sessionStorage.removeItem('isAdmin');
+    setShowAdmin(false);
+  };
+
   const themes = {
     red: {
-      name: "Rouge Passion & Puissance",
+      name: "Rouge Passion",
       primary: "from-rose-500 to-red-600",
       textPrimary: "text-rose-500",
       bgBadge: "bg-rose-500/10 border-rose-500/20 text-rose-400",
@@ -46,7 +88,7 @@ export default function Portfolio() {
       accentHex: "#8b5cf6"
     },
     blue: {
-      name: "Bleu Océan Pro",
+      name: "Bleu Océan",
       primary: "from-blue-500 to-cyan-400",
       textPrimary: "text-blue-400",
       bgBadge: "bg-blue-500/10 border-blue-500/20 text-blue-400",
@@ -167,10 +209,10 @@ export default function Portfolio() {
   };
 
   return (
-    <div className={`min-h-screen bg-slate-950 text-slate-100 font-sans ${currentTheme.selection} transition-colors duration-500`}>
+    <div className={`min-h-screen font-sans ${currentTheme.selection} transition-colors duration-500 ${darkMode ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'}`}>
       
       {/* Barre de personnalisation du Thème en haut */}
-      <div className="bg-slate-900 border-b border-slate-800 py-2.5 px-6">
+      <div className={`py-2.5 px-6 ${darkMode ? 'bg-slate-900 border-slate-800' : 'bg-white border-slate-200'} border-b`}>
         <div className="max-w-6xl mx-auto flex flex-wrap items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
             <Palette size={15} className={currentTheme.textPrimary} />
@@ -184,7 +226,9 @@ export default function Portfolio() {
                 className={`px-3 py-1 rounded-lg text-xs font-semibold transition border ${
                   themeColor === key 
                     ? 'bg-slate-800 text-white border-slate-600 shadow-md' 
-                    : 'bg-slate-950 text-slate-400 border-slate-800 hover:bg-slate-800'
+                    : darkMode
+                      ? 'bg-slate-950 text-slate-400 border-slate-800 hover:bg-slate-800'
+                      : 'bg-white text-slate-600 border-slate-200 hover:bg-slate-100'
                 }`}
               >
                 {themes[key].name.split(' ')[0]}
@@ -195,19 +239,19 @@ export default function Portfolio() {
       </div>
 
       {/* Navigation Principale */}
-      <header className="border-b border-slate-800/80 bg-slate-950/90 backdrop-blur-md sticky top-0 z-50 shadow-2xl">
+      <header className={`border-b backdrop-blur-md sticky top-0 z-50 shadow-2xl ${darkMode ? 'bg-slate-950/90 border-slate-800/80' : 'bg-white/90 border-slate-200'}`}>
         <div className="max-w-6xl mx-auto px-6 h-20 flex justify-between items-center">
           <div className="flex items-center space-x-3">
             <div className={`bg-gradient-to-tr ${currentTheme.primary} text-slate-950 p-2.5 rounded-xl font-bold shadow-lg`}>
               <Terminal size={22} />
             </div>
             <div>
-              <span className="font-black text-base tracking-tight text-white block">Kengne Tachago Daniel Vahid</span>
+              <span className={`font-black text-base tracking-tight block ${darkMode ? 'text-white' : 'text-slate-900'}`}>Kengne Tachago Daniel Vahid</span>
               <span className={`text-xs ${currentTheme.textPrimary} font-mono font-bold`}>Daniel is Programmer 🇨🇲</span>
             </div>
           </div>
 
-          <nav className="hidden md:flex items-center space-x-8 text-sm font-medium text-slate-300">
+          <nav className={`hidden md:flex items-center space-x-8 text-sm font-medium ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
             <a href="#about" className="hover:text-white transition">Parcours</a>
             <a href="#genesis" className="hover:text-white transition">Genesis Academy</a>
             <a href="#projects" className="hover:text-white transition">Projets</a>
@@ -215,21 +259,39 @@ export default function Portfolio() {
             <a href="#contact" className="hover:text-white transition">Contact</a>
           </nav>
 
-          <a 
-            href="https://wa.me/237690309313" 
-            target="_blank" 
-            rel="noreferrer" 
-            className={`hidden sm:flex items-center gap-2 ${currentTheme.button} px-4 py-2.5 rounded-xl text-xs font-bold transition shadow-lg`}
-          >
-            <Phone size={14} /> +237 690 309 313
-          </a>
+          <div className="flex items-center gap-2">
+            <button
+              onClick={toggleTheme}
+              className={`p-2.5 rounded-xl transition-all hover:scale-105 ${darkMode ? 'bg-slate-800 text-slate-200 border-slate-700' : 'bg-slate-100 text-slate-700 border-slate-200'} border`}
+              aria-label="Toggle Theme"
+            >
+              {darkMode ? <Sun size={18} className="text-amber-400" /> : <Moon size={18} className="text-indigo-600" />}
+            </button>
+
+            <button
+              onClick={() => setShowAdmin(true)}
+              className={`p-2.5 rounded-xl transition-all hover:scale-105 ${darkMode ? 'bg-slate-800 text-slate-200 border-slate-700' : 'bg-slate-100 text-slate-700 border-slate-200'} border`}
+              title="Admin"
+            >
+              <Shield size={18} />
+            </button>
+
+            <a 
+              href="https://wa.me/237690309313" 
+              target="_blank" 
+              rel="noreferrer" 
+              className={`hidden sm:flex items-center gap-2 ${currentTheme.button} px-4 py-2.5 rounded-xl text-xs font-bold transition shadow-lg`}
+            >
+              <Phone size={14} /> +237 690 309 313
+            </a>
+          </div>
         </div>
       </header>
 
       <main className="max-w-6xl mx-auto px-6 py-12 space-y-24">
         
         {/* Section Hero Immersive */}
-        <section className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center bg-gradient-to-br from-slate-900/95 via-slate-900/50 to-slate-950 p-8 md:p-14 rounded-3xl border border-slate-800 shadow-2xl relative overflow-hidden">
+        <section className={`grid grid-cols-1 lg:grid-cols-12 gap-10 items-center p-8 md:p-14 rounded-3xl border shadow-2xl relative overflow-hidden ${darkMode ? 'bg-gradient-to-br from-slate-900/95 via-slate-900/50 to-slate-950 border-slate-800' : 'bg-gradient-to-br from-white via-slate-50 to-slate-100 border-slate-200'}`}>
           <div className={`absolute top-0 right-0 w-96 h-96 bg-gradient-to-br ${currentTheme.primary} opacity-10 rounded-full blur-3xl pointer-events-none`}></div>
           
           <div className="lg:col-span-7 space-y-6 z-10">
@@ -237,16 +299,16 @@ export default function Portfolio() {
               <Flame size={14} /> Fullstack Developer & EdTech Founder
             </div>
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight text-white leading-tight">
+            <h1 className={`text-4xl md:text-5xl lg:text-6xl font-black tracking-tight leading-tight ${darkMode ? 'text-white' : 'text-slate-900'}`}>
               Concepteur d'applications <span className={`bg-gradient-to-r ${currentTheme.primary} bg-clip-text text-transparent`}>Web & Systèmes Intelligents</span>.
             </h1>
             
-            <p className="text-slate-300 text-sm md:text-base leading-relaxed">
+            <p className={`text-sm md:text-base leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
               Étudiant en Informatique Fondamentale à l'Université de Yaoundé 1 (UY1). Formé chez <strong className="text-white">Worketyamo</strong> (UI/UX Figma) et <strong className="text-white">LesCracks</strong> (Frontend avancé). Fondateur de <strong className={currentTheme.textPrimary}>Genesis Academy</strong> pour former la relève camerounaise.
             </p>
 
             <div className="flex flex-wrap gap-4 pt-4">
-              <a href="https://github.com/Danielisprogrammer" target="_blank" rel="noreferrer" className="flex items-center gap-2 bg-slate-900 hover:bg-slate-800 text-slate-100 px-6 py-3.5 rounded-xl text-sm font-semibold transition border border-slate-700 shadow-xl">
+              <a href="https://github.com/Danielisprogrammer" target="_blank" rel="noreferrer" className={`flex items-center gap-2 px-6 py-3.5 rounded-xl text-sm font-semibold transition border shadow-xl ${darkMode ? 'bg-slate-900 hover:bg-slate-800 text-slate-100 border-slate-700' : 'bg-white hover:bg-slate-50 text-slate-700 border-slate-200'}`}>
                 <Globe size={18} /> Profil GitHub
               </a>
               <a href="#projects" className={`flex items-center gap-2 ${currentTheme.button} px-6 py-3.5 rounded-xl text-sm font-bold shadow-xl transition`}>
@@ -258,14 +320,14 @@ export default function Portfolio() {
           <div className="lg:col-span-5 flex justify-center z-10">
             <div className="relative group">
               <div className={`absolute -inset-1.5 bg-gradient-to-r ${currentTheme.primary} rounded-3xl blur opacity-40 group-hover:opacity-80 transition duration-500`}></div>
-              <div className="relative bg-slate-900 border border-slate-700 p-3 rounded-2xl shadow-2xl">
+              <div className={`relative border p-3 rounded-2xl shadow-2xl ${darkMode ? 'bg-slate-900 border-slate-700' : 'bg-white border-slate-200'}`}>
                 <img 
                   src={profileImage} 
                   alt="Kengne Tachago Daniel Vahid" 
                   className="rounded-xl object-cover w-72 h-80 md:w-80 md:h-96"
                 />
-                <div className="absolute bottom-6 left-6 right-6 bg-slate-950/85 backdrop-blur-md p-3.5 rounded-xl border border-slate-800 text-center shadow-lg">
-                  <p className="text-xs font-bold text-white">Kengne Tachago Daniel Vahid</p>
+                <div className={`absolute bottom-6 left-6 right-6 backdrop-blur-md p-3.5 rounded-xl border text-center shadow-lg ${darkMode ? 'bg-slate-950/85 border-slate-800' : 'bg-white/85 border-slate-200'}`}>
+                  <p className={`text-xs font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>Kengne Tachago Daniel Vahid</p>
                   <p className={`text-[11px] ${currentTheme.textPrimary} font-mono font-bold`}>@Danielisprogrammer</p>
                 </div>
               </div>
@@ -275,34 +337,34 @@ export default function Portfolio() {
 
         {/* Section Parcours Académique */}
         <section id="about" className="space-y-8">
-          <div className="border-b border-slate-800 pb-4">
-            <h2 className="text-2xl md:text-3xl font-black tracking-tight text-white flex items-center gap-3">
+          <div className={`border-b pb-4 ${darkMode ? 'border-slate-800' : 'border-slate-200'}`}>
+            <h2 className={`text-2xl md:text-3xl font-black tracking-tight flex items-center gap-3 ${darkMode ? 'text-white' : 'text-slate-900'}`}>
               <GraduationCap className={currentTheme.textPrimary} /> Parcours & Formation d'Excellence
             </h2>
-            <p className="text-slate-400 text-sm mt-1">Un cursus rigoureux ancré entre l'Université de Yaoundé 1 et le terrain professionnel.</p>
+            <p className={`text-sm mt-1 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Un cursus rigoureux ancré entre l'Université de Yaoundé 1 et le terrain professionnel.</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-slate-900/80 border border-slate-800 p-7 rounded-2xl space-y-4 hover:border-slate-700 transition shadow-xl">
-              <span className={`text-xs font-mono font-bold ${currentTheme.textPrimary} bg-slate-950 px-3 py-1 rounded-md border border-slate-800`}>Licence Informatique • UY1</span>
-              <h3 className="text-lg font-bold text-white">Informatique Fondamentale</h3>
-              <p className="text-xs text-slate-300 leading-relaxed">
+            <div className={`border p-7 rounded-2xl space-y-4 transition shadow-xl ${darkMode ? 'bg-slate-900/80 border-slate-800 hover:border-slate-700' : 'bg-white border-slate-200 hover:border-slate-300'}`}>
+              <span className={`text-xs font-mono font-bold px-3 py-1 rounded-md border ${currentTheme.textPrimary} ${darkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>Licence Informatique • UY1</span>
+              <h3 className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>Informatique Fondamentale</h3>
+              <p className={`text-xs leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
                 Issu d'un Baccalauréat C solide, je poursuis un cursus rigoureux à la Faculté des Sciences de l'Université de Yaoundé 1, maîtrisant algorithmique, structures de données et architecture logicielle.
               </p>
             </div>
 
-            <div className="bg-slate-900/80 border border-slate-800 p-7 rounded-2xl space-y-4 hover:border-slate-700 transition shadow-xl">
-              <span className={`text-xs font-mono font-bold ${currentTheme.textPrimary} bg-slate-950 px-3 py-1 rounded-md border border-slate-800`}>Worketyamo & LesCracks</span>
-              <h3 className="text-lg font-bold text-white">Certifications & Formations Web</h3>
-              <p className="text-xs text-slate-300 leading-relaxed">
+            <div className={`border p-7 rounded-2xl space-y-4 transition shadow-xl ${darkMode ? 'bg-slate-900/80 border-slate-800 hover:border-slate-700' : 'bg-white border-slate-200 hover:border-slate-300'}`}>
+              <span className={`text-xs font-mono font-bold px-3 py-1 rounded-md border ${currentTheme.textPrimary} ${darkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>Worketyamo & LesCracks</span>
+              <h3 className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>Certifications & Formations Web</h3>
+              <p className={`text-xs leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
                 UI/UX Design validé chez Worketyamo (Carrefour Melen). Développement Frontend et méthodologies agiles (Git/GitHub) approfondis au sein de la communauté LesCracks.
               </p>
             </div>
 
-            <div className="bg-slate-900/80 border border-slate-800 p-7 rounded-2xl space-y-4 hover:border-slate-700 transition shadow-xl">
-              <span className={`text-xs font-mono font-bold ${currentTheme.textPrimary} bg-slate-950 px-3 py-1 rounded-md border border-slate-800`}>Matériel & Systèmes</span>
-              <h3 className="text-lg font-bold text-white">Linux Ubuntu & Réseaux</h3>
-              <p className="text-xs text-slate-300 leading-relaxed">
+            <div className={`border p-7 rounded-2xl space-y-4 transition shadow-xl ${darkMode ? 'bg-slate-900/80 border-slate-800 hover:border-slate-700' : 'bg-white border-slate-200 hover:border-slate-300'}`}>
+              <span className={`text-xs font-mono font-bold px-3 py-1 rounded-md border ${currentTheme.textPrimary} ${darkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>Matériel & Systèmes</span>
+              <h3 className={`text-lg font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>Linux Ubuntu & Réseaux</h3>
+              <p className={`text-xs leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
                 Utilisation quotidienne d'un Dell Latitude sous Linux Ubuntu pour un développement bas niveau optimisé. Compétences certifiées en maintenance et câblage réseau.
               </p>
             </div>
@@ -310,18 +372,18 @@ export default function Portfolio() {
         </section>
 
         {/* Section Genesis Academy */}
-        <section id="genesis" className={`bg-gradient-to-r from-slate-900 via-slate-900 to-slate-950 border border-slate-800 p-8 md:p-12 rounded-3xl space-y-6 shadow-2xl relative overflow-hidden`}>
+        <section id="genesis" className={`border p-8 md:p-12 rounded-3xl space-y-6 shadow-2xl relative overflow-hidden ${darkMode ? 'bg-gradient-to-r from-slate-900 via-slate-900 to-slate-950 border-slate-800' : 'bg-gradient-to-r from-white via-slate-50 to-slate-100 border-slate-200'}`}>
           <div className={`absolute -right-20 -bottom-20 w-80 h-80 bg-gradient-to-br ${currentTheme.primary} opacity-10 rounded-full blur-3xl pointer-events-none`}></div>
           <div className="flex items-center gap-4">
-            <div className={`p-3.5 bg-slate-950 ${currentTheme.textPrimary} rounded-2xl border border-slate-800 shadow-inner`}>
+            <div className={`p-3.5 rounded-2xl border shadow-inner ${darkMode ? 'bg-slate-950 border-slate-800' : 'bg-white border-slate-200'} ${currentTheme.textPrimary}`}>
               <Sparkles size={28} />
             </div>
             <div>
-              <span className={`text-xs uppercase tracking-widest ${currentTheme.textPrimary} font-bold`}>Impact Social & Pédagogique</span>
-              <h2 className="text-2xl md:text-3xl font-black text-white">Genesis Academy</h2>
+              <span className={`text-xs uppercase tracking-widest font-bold ${currentTheme.textPrimary}`}>Impact Social & Pédagogique</span>
+              <h2 className={`text-2xl md:text-3xl font-black ${darkMode ? 'text-white' : 'text-slate-900'}`}>Genesis Academy</h2>
             </div>
           </div>
-          <p className="text-slate-200 text-sm md:text-base leading-relaxed max-w-4xl">
+          <p className={`text-sm md:text-base leading-relaxed max-w-4xl ${darkMode ? 'text-slate-200' : 'text-slate-700'}`}>
             Fondé le <strong className="text-white">14 septembre 2026</strong> au <strong className="text-white">Groupe Scolaire God's Time</strong> (sis à la Fabrique Ngousso), <strong className={currentTheme.textPrimary}>Genesis Academy</strong> est mon centre de répétition d'excellence. J'y encadre personnellement une équipe d'élèves de la 6e en Terminale, alliant rigueur mathématique et transmission de savoirs technologiques.
           </p>
         </section>
@@ -330,41 +392,41 @@ export default function Portfolio() {
         <section id="projects" className="space-y-8">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-slate-800 pb-4">
             <div>
-              <h2 className="text-2xl md:text-3xl font-black tracking-tight text-white flex items-center gap-3">
+              <h2 className={`text-2xl md:text-3xl font-black tracking-tight flex items-center gap-3 ${darkMode ? 'text-white' : 'text-slate-900'}`}>
                 <Code2 className={currentTheme.textPrimary} /> Projets Phares & Réalisations
               </h2>
-              <p className="text-slate-400 text-sm mt-1">Explore mes applications web, backends et outils open-source hébergés.</p>
+              <p className={`text-sm mt-1 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Explore mes applications web, backends et outils open-source hébergés.</p>
             </div>
 
             {/* Boutons de Filtres Stylés */}
             <div className="flex flex-wrap gap-2 text-xs font-bold">
               <button 
                 onClick={() => setFilter('all')} 
-                className={`px-4 py-2 rounded-xl transition ${filter === 'all' ? currentTheme.button : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800'}`}
+                className={`px-4 py-2 rounded-xl transition ${filter === 'all' ? currentTheme.button : darkMode ? 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}`}
               >
                 Tous ({projects.length})
               </button>
               <button 
                 onClick={() => setFilter('fullstack')} 
-                className={`px-4 py-2 rounded-xl transition ${filter === 'fullstack' ? currentTheme.button : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800'}`}
+                className={`px-4 py-2 rounded-xl transition ${filter === 'fullstack' ? currentTheme.button : darkMode ? 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}`}
               >
                 Fullstack
               </button>
               <button 
                 onClick={() => setFilter('frontend')} 
-                className={`px-4 py-2 rounded-xl transition ${filter === 'frontend' ? currentTheme.button : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800'}`}
+                className={`px-4 py-2 rounded-xl transition ${filter === 'frontend' ? currentTheme.button : darkMode ? 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}`}
               >
                 Frontend & UI
               </button>
               <button 
                 onClick={() => setFilter('backend')} 
-                className={`px-4 py-2 rounded-xl transition ${filter === 'backend' ? currentTheme.button : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800'}`}
+                className={`px-4 py-2 rounded-xl transition ${filter === 'backend' ? currentTheme.button : darkMode ? 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}`}
               >
                 Backend
               </button>
               <button 
                 onClick={() => setFilter('data')} 
-                className={`px-4 py-2 rounded-xl transition ${filter === 'data' ? currentTheme.button : 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800'}`}
+                className={`px-4 py-2 rounded-xl transition ${filter === 'data' ? currentTheme.button : darkMode ? 'bg-slate-900 text-slate-300 hover:bg-slate-800 border border-slate-800' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'}`}
               >
                 Data & IA
               </button>
@@ -373,10 +435,10 @@ export default function Portfolio() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredProjects.map((proj, idx) => (
-              <div key={idx} className={`bg-slate-900/90 border border-slate-800 rounded-2xl p-6 flex flex-col justify-between ${currentTheme.borderGlow} transition-all duration-300 group shadow-xl hover:-translate-y-1`}>
+              <div key={idx} className={`border rounded-2xl p-6 flex flex-col justify-between transition-all duration-300 group shadow-xl hover:-translate-y-1 ${currentTheme.borderGlow} ${darkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200'}`}>
                 <div className="space-y-3">
                   <div className="flex justify-between items-center">
-                    <span className={`text-[10px] font-mono font-bold ${currentTheme.textPrimary} bg-slate-950 px-3 py-1 rounded-md border border-slate-800`}>
+                    <span className={`text-[10px] font-mono font-bold px-3 py-1 rounded-md border ${currentTheme.textPrimary} ${darkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
                       {proj.badge}
                     </span>
                     {proj.featured && (
@@ -385,10 +447,10 @@ export default function Portfolio() {
                       </span>
                     )}
                   </div>
-                  <h3 className="text-lg font-bold text-white group-hover:text-slate-200 transition">
+                  <h3 className={`text-lg font-bold transition ${darkMode ? 'text-white group-hover:text-slate-200' : 'text-slate-900 group-hover:text-slate-700'}`}>
                     {proj.title}
                   </h3>
-                  <p className="text-slate-300 text-xs leading-relaxed">
+                  <p className={`text-xs leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
                     {proj.description}
                   </p>
                 </div>
@@ -396,18 +458,18 @@ export default function Portfolio() {
                 <div className="space-y-4 pt-6">
                   <div className="flex flex-wrap gap-1.5">
                     {proj.tags.map((tag, tIdx) => (
-                      <span key={tIdx} className="text-[10px] font-mono bg-slate-950 text-slate-300 px-2.5 py-1 rounded border border-slate-800">
+                      <span key={tIdx} className={`text-[10px] font-mono px-2.5 py-1 rounded border ${darkMode ? 'bg-slate-950 text-slate-300 border-slate-800' : 'bg-slate-50 text-slate-600 border-slate-200'}`}>
                         {tag}
                       </span>
                     ))}
                   </div>
 
-                  <div className="flex items-center gap-3 pt-4 border-t border-slate-800">
-                    <a href={proj.github} target="_blank" rel="noreferrer" className="flex items-center gap-1.5 text-xs text-slate-300 hover:text-white bg-slate-950 hover:bg-slate-800 px-3.5 py-2.5 rounded-xl transition border border-slate-800 flex-1 justify-center font-medium">
+                  <div className={`flex items-center gap-3 pt-4 border-t ${darkMode ? 'border-slate-800' : 'border-slate-200'}`}>
+                    <a href={proj.github} target="_blank" rel="noreferrer" className={`flex items-center gap-1.5 text-xs transition px-3.5 py-2.5 rounded-xl border flex-1 justify-center font-medium ${darkMode ? 'text-slate-300 hover:text-white bg-slate-950 hover:bg-slate-800 border-slate-800' : 'text-slate-600 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 border-slate-200'}`}>
                       <Code2 size={14} /> Code source
                     </a>
                     {proj.demo && (
-                      <a href={proj.demo} target="_blank" rel="noreferrer" className={`flex items-center gap-1.5 text-xs ${currentTheme.textPrimary} bg-slate-950 hover:bg-slate-900 px-3.5 py-2.5 rounded-xl transition border border-slate-800 flex-1 justify-center font-bold`}>
+                      <a href={proj.demo} target="_blank" rel="noreferrer" className={`flex items-center gap-1.5 text-xs ${currentTheme.textPrimary} px-3.5 py-2.5 rounded-xl transition border flex-1 justify-center font-bold ${darkMode ? 'bg-slate-950 hover:bg-slate-900 border-slate-800' : 'bg-slate-50 hover:bg-slate-100 border-slate-200'}`}>
                         <ExternalLink size={14} /> Démo Live
                       </a>
                     )}
@@ -420,112 +482,112 @@ export default function Portfolio() {
 
         {/* Section Expertise & Skills */}
         <section id="skills" className="grid grid-cols-1 md:grid-cols-3 gap-6 pt-6 border-t border-slate-800">
-          <div className="bg-slate-900/80 border border-slate-800 p-7 rounded-2xl space-y-3 shadow-xl">
+          <div className={`border p-7 rounded-2xl space-y-3 shadow-xl ${darkMode ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200'}`}>
             <Cpu className={currentTheme.textPrimary} size={28} />
-            <h3 className="font-bold text-white text-lg">Frontend & UI/UX</h3>
-            <p className="text-xs text-slate-300 leading-relaxed">React.js, JavaScript (ES6+), TypeScript, HTML5, CSS3, Tailwind CSS, Bootstrap, Figma (Worketyamo certified), Canva.</p>
+            <h3 className={`font-bold text-lg ${darkMode ? 'text-white' : 'text-slate-900'}`}>Frontend & UI/UX</h3>
+            <p className={`text-xs leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>React.js, JavaScript (ES6+), TypeScript, HTML5, CSS3, Tailwind CSS, Bootstrap, Figma (Worketyamo certified), Canva.</p>
           </div>
-          <div className="bg-slate-900/80 border border-slate-800 p-7 rounded-2xl space-y-3 shadow-xl">
+          <div className={`border p-7 rounded-2xl space-y-3 shadow-xl ${darkMode ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200'}`}>
             <Database className={currentTheme.textPrimary} size={28} />
-            <h3 className="font-bold text-white text-lg">Backend & Données</h3>
-            <p className="text-xs text-slate-300 leading-relaxed">Node.js, Express, PHP natif, Python (Streamlit), PostgreSQL, Prisma ORM, MySQL, SQLite.</p>
+            <h3 className={`font-bold text-lg ${darkMode ? 'text-white' : 'text-slate-900'}`}>Backend & Données</h3>
+            <p className={`text-xs leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>Node.js, Express, PHP natif, Python (Streamlit), PostgreSQL, Prisma ORM, MySQL, SQLite.</p>
           </div>
-          <div className="bg-slate-900/80 border border-slate-800 p-7 rounded-2xl space-y-3 shadow-xl">
+          <div className={`border p-7 rounded-2xl space-y-3 shadow-xl ${darkMode ? 'bg-slate-900/80 border-slate-800' : 'bg-white border-slate-200'}`}>
             <Terminal className={currentTheme.textPrimary} size={28} />
-            <h3 className="font-bold text-white text-lg">Outils & Systèmes</h3>
-            <p className="text-xs text-slate-300 leading-relaxed">Git, GitHub Flow, Ubuntu Linux Dell Latitude, VS Code, Vite, Render, Streamlit Cloud, Maintenance & Réseaux.</p>
+            <h3 className={`font-bold text-lg ${darkMode ? 'text-white' : 'text-slate-900'}`}>Outils & Systèmes</h3>
+            <p className={`text-xs leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>Git, GitHub Flow, Ubuntu Linux Dell Latitude, VS Code, Vite, Render, Streamlit Cloud, Maintenance & Réseaux.</p>
           </div>
         </section>
 
         {/* SECTION CONTACT INTERACTIVE RÉINTÉGRÉE ET ULTRA VIVANTE */}
-        <section id="contact" className="grid grid-cols-1 lg:grid-cols-12 gap-10 bg-slate-900/90 border border-slate-800 p-8 md:p-12 rounded-3xl shadow-2xl relative overflow-hidden">
+        <section id="contact" className={`grid grid-cols-1 lg:grid-cols-12 gap-10 border p-8 md:p-12 rounded-3xl shadow-2xl relative overflow-hidden ${darkMode ? 'bg-slate-900/90 border-slate-800' : 'bg-white border-slate-200'}`}>
           <div className="lg:col-span-5 space-y-6">
             <div>
-              <span className={`text-xs uppercase tracking-widest ${currentTheme.textPrimary} font-bold`}>Restons en contact</span>
-              <h2 className="text-3xl font-black text-white mt-1">Discutons de ton projet</h2>
+              <span className={`text-xs uppercase tracking-widest font-bold ${currentTheme.textPrimary}`}>Restons en contact</span>
+              <h2 className={`text-3xl font-black mt-1 ${darkMode ? 'text-white' : 'text-slate-900'}`}>Discutons de ton projet</h2>
             </div>
-            <p className="text-slate-300 text-sm leading-relaxed">
+            <p className={`text-sm leading-relaxed ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
               Besoin d'un développeur fullstack rigoureux, d'un formateur pour Genesis Academy ou d'une collaboration technique à Yaoundé ou en ligne ? Envoie-moi un message direct !
             </p>
 
             <div className="space-y-4 pt-2">
-              <a href="mailto:kengnetachagod@gmail.com" className="flex items-center gap-3 text-slate-200 bg-slate-950 p-4 rounded-2xl border border-slate-800 hover:border-slate-700 transition">
-                <div className={`p-2.5 rounded-xl bg-slate-900 ${currentTheme.textPrimary}`}>
+              <a href="mailto:kengnetachagod@gmail.com" className={`flex items-center gap-3 p-4 rounded-2xl border transition ${darkMode ? 'text-slate-200 bg-slate-950 border-slate-800 hover:border-slate-700' : 'text-slate-700 bg-slate-50 border-slate-200 hover:border-slate-300'}`}>
+                <div className={`p-2.5 rounded-xl ${darkMode ? 'bg-slate-900' : 'bg-white'} ${currentTheme.textPrimary}`}>
                   <Mail size={18} />
                 </div>
                 <div>
-                  <span className="text-[10px] text-slate-400 block font-mono">Email Direct</span>
-                  <span className="text-xs font-bold text-white">kengnetachagod@gmail.com</span>
+                  <span className={`text-[10px] block font-mono ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Email Direct</span>
+                  <span className={`text-xs font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>kengned776@gmail.com</span>
                 </div>
               </a>
 
-              <a href="https://wa.me/237690309313" target="_blank" rel="noreferrer" className="flex items-center gap-3 text-slate-200 bg-slate-950 p-4 rounded-2xl border border-slate-800 hover:border-slate-700 transition">
-                <div className={`p-2.5 rounded-xl bg-slate-900 ${currentTheme.textPrimary}`}>
+              <a href="https://wa.me/237690309313" target="_blank" rel="noreferrer" className={`flex items-center gap-3 p-4 rounded-2xl border transition ${darkMode ? 'text-slate-200 bg-slate-950 border-slate-800 hover:border-slate-700' : 'text-slate-700 bg-slate-50 border-slate-200 hover:border-slate-300'}`}>
+                <div className={`p-2.5 rounded-xl ${darkMode ? 'bg-slate-900' : 'bg-white'} ${currentTheme.textPrimary}`}>
                   <Phone size={18} />
                 </div>
                 <div>
-                  <span className="text-[10px] text-slate-400 block font-mono">WhatsApp & Téléphone</span>
-                  <span className="text-xs font-bold text-white">+237 690 309 313</span>
+                  <span className={`text-[10px] block font-mono ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>WhatsApp & Téléphone</span>
+                  <span className={`text-xs font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>+237 690 309 313</span>
                 </div>
               </a>
 
-              <div className="flex items-center gap-3 text-slate-200 bg-slate-950 p-4 rounded-2xl border border-slate-800">
-                <div className={`p-2.5 rounded-xl bg-slate-900 ${currentTheme.textPrimary}`}>
+              <div className={`flex items-center gap-3 p-4 rounded-2xl border ${darkMode ? 'text-slate-200 bg-slate-950 border-slate-800' : 'text-slate-700 bg-slate-50 border-slate-200'}`}>
+                <div className={`p-2.5 rounded-xl ${darkMode ? 'bg-slate-900' : 'bg-white'} ${currentTheme.textPrimary}`}>
                   <MapPin size={18} />
                 </div>
                 <div>
-                  <span className="text-[10px] text-slate-400 block font-mono">Localisation</span>
-                  <span className="text-xs font-bold text-white">Yaoundé, Ngousso / Melen, Cameroun 🇨🇲</span>
+                  <span className={`text-[10px] block font-mono ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Localisation</span>
+                  <span className={`text-xs font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>Yaoundé, Ngousso /  Cameroun 🇨🇲</span>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="lg:col-span-7 bg-slate-950 border border-slate-800 p-6 md:p-8 rounded-2xl shadow-xl">
+          <div className={`lg:col-span-7 border p-6 md:p-8 rounded-2xl shadow-xl ${darkMode ? 'bg-slate-950 border-slate-800' : 'bg-slate-50 border-slate-200'}`}>
             {formSent ? (
               <div className="h-full flex flex-col items-center justify-center text-center space-y-4 py-12">
-                <div className={`w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20`}>
+                <div className="w-16 h-16 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center border border-emerald-500/20">
                   <CheckCircle2 size={32} />
                 </div>
-                <h3 className="text-xl font-bold text-white">Message bien transmis !</h3>
-                <p className="text-slate-300 text-xs max-w-sm">
+                <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-900'}`}>Message bien transmis !</h3>
+                <p className={`text-xs max-w-sm ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
                   Merci Daniel ! Ton message a été pris en compte avec succès. Je te recontacterai dans les plus brefs délais.
                 </p>
               </div>
             ) : (
               <form onSubmit={handleContactSubmit} className="space-y-4">
-                <h3 className="text-lg font-bold text-white mb-2">Formulaire de Contact Rapide</h3>
+                <h3 className={`text-lg font-bold mb-2 ${darkMode ? 'text-white' : 'text-slate-900'}`}>Formulaire de Contact Rapide</h3>
                 <div>
-                  <label className="block text-xs font-mono text-slate-400 mb-1">Ton Nom / Entreprise</label>
+                  <label className={`block text-xs font-mono mb-1 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Ton Nom / Entreprise</label>
                   <input 
                     type="text" 
                     required
                     value={formData.name}
                     onChange={(e) => setFormData({...formData, name: e.target.value})}
-                    placeholder="Ex: Paul Mbia" 
-                    className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-slate-600 transition"
+                    placeholder="Ex:daniel is programmer" 
+                    className={`w-full border rounded-xl px-4 py-3 text-xs focus:outline-none transition ${darkMode ? 'bg-slate-900 border-slate-800 text-white focus:border-slate-600' : 'bg-white border-slate-200 text-slate-900 focus:border-slate-400'}`}
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-mono text-slate-400 mb-1">Ton Adresse Email</label>
+                  <label className={`block text-xs font-mono mb-1 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Ton Adresse Email</label>
                   <input 
                     type="email" 
                     required
                     value={formData.email}
                     onChange={(e) => setFormData({...formData, email: e.target.value})}
-                    placeholder="Ex: paul@gmail.com" 
-                    className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-slate-600 transition"
+                    placeholder="Ex: daniel@gmail.com" 
+                    className={`w-full border rounded-xl px-4 py-3 text-xs focus:outline-none transition ${darkMode ? 'bg-slate-900 border-slate-800 text-white focus:border-slate-600' : 'bg-white border-slate-200 text-slate-900 focus:border-slate-400'}`}
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-mono text-slate-400 mb-1">Ton Message</label>
+                  <label className={`block text-xs font-mono mb-1 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>Ton Message</label>
                   <textarea 
                     rows="4" 
                     required
                     value={formData.message}
                     onChange={(e) => setFormData({...formData, message: e.target.value})}
                     placeholder="Écris ton message ici..." 
-                    className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white focus:outline-none focus:border-slate-600 transition resize-none"
+                    className={`w-full border rounded-xl px-4 py-3 text-xs focus:outline-none transition resize-none ${darkMode ? 'bg-slate-900 border-slate-800 text-white focus:border-slate-600' : 'bg-white border-slate-200 text-slate-900 focus:border-slate-400'}`}
                   ></textarea>
                 </div>
                 <button 
@@ -538,19 +600,38 @@ export default function Portfolio() {
             )}
           </div>
         </section>
-
+        
       </main>
 
       {/* Footer Pro */}
-      <footer className="border-t border-slate-800/80 mt-24 py-12 px-6 text-center text-xs text-slate-500 space-y-3">
-        <div className="flex justify-center items-center gap-4 text-slate-400 pb-2">
+      <footer className={`mt-24 py-12 px-6 text-center text-xs space-y-3 border-t ${darkMode ? 'border-slate-800/80 text-slate-500' : 'border-slate-200 text-slate-500'}`}>
+        <div className={`flex justify-center items-center gap-4 pb-2 ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
           <a href="https://github.com/Danielisprogrammer" target="_blank" rel="noreferrer" className="hover:text-white transition"><Globe size={18} /></a>
           <a href="https://wa.me/237690309313" target="_blank" rel="noreferrer" className="hover:text-white transition"><Phone size={18} /></a>
           <a href="mailto:kengnetachagod@gmail.com" className="hover:text-white transition"><Mail size={18} /></a>
         </div>
         <p>© 2026 Kengne Tachago Daniel Vahid (Daniel is Programmer). Tous droits réservés.</p>
-        <p className="text-slate-600 font-mono">Conçu et développé à Yaoundé, Cameroun 🇨🇲 • Thème actif : {currentTheme.name}</p>
+        <p className={`font-mono ${darkMode ? 'text-slate-600' : 'text-slate-400'}`}>Conçu et développé à Yaoundé, Cameroun 🇨🇲 • Thème actif : {currentTheme.name}</p>
       </footer>
+
+      {/* Admin Floating Button */}
+      {isAdmin && (
+        <button
+          onClick={() => setShowAdmin(true)}
+          className="fixed bottom-6 right-6 z-50 p-4 rounded-2xl bg-gradient-to-r from-indigo-600 to-purple-600 text-white shadow-2xl shadow-indigo-500/30 hover:scale-110 transition-all duration-300"
+          title="Panneau Admin"
+        >
+          <Settings size={24} />
+        </button>
+      )}
+
+      {/* Admin Panel Modal */}
+      {showAdmin && (
+        <AdminPanel
+          onClose={() => setShowAdmin(false)}
+          onLogout={handleAdminLogout}
+        />
+      )}
     </div>
   );
 }

@@ -1,89 +1,117 @@
 import React from 'react';
-import { Sparkles, Globe, Award, Rocket } from 'lucide-react';
+import { Sparkles, MapPin, Phone, BookOpen, Users, Award } from 'lucide-react';
+
+const contacts = [
+  { number: '690 30 93 13', wa: '690309313' },
+  { number: '683 93 44 89', wa: '683934489' },
+  { number: '656 13 29 42', wa: '656132942' },
+];
 
 export const Genesis = () => {
   return (
-    <section id="genesis" className="py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto relative">
+    <section id="genesis" className="py-28 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
       <div className="text-center max-w-3xl mx-auto mb-16">
-        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-4" style={{ background: 'rgba(236, 72, 153, 0.1)', color: '#ec4899', border: '1px solid rgba(236, 72, 153, 0.2)' }}>
+        <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold mb-4 bg-pink-500/10 text-pink-500 dark:text-pink-400 border border-pink-500/20">
           <Sparkles size={14} />
-          <span>Vision & Initiative</span>
+          <span>Impact Social & Pédagogique</span>
         </div>
-        <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-6">
-          L'Initiative Genesy Academy
+        <h2 className="text-3xl sm:text-5xl font-extrabold tracking-tight mb-4 text-slate-900 dark:text-white">
+          Genesis Academy
         </h2>
-        <p className="text-lg" style={{ color: 'var(--text-muted)' }}>
-          Bien plus qu'un projet : une vision technologique et sociale née à Yaoundé pour encardrer, éduquer et connecter les talents de demain.
+        <p className="text-lg text-slate-600 dark:text-slate-400">
+          Centre d'Accompagnement Scolaire — « Crainte de Dieu • Discipline • Excellence »
         </p>
       </div>
-      
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-        <div className="lg:col-span-7 space-y-6">
-          <div className="custom-card p-8 space-y-6" style={{ background: 'var(--card-bg)' }}>
-            <div className="flex items-center gap-3">
-              <div className="p-3 rounded-xl bg-pink-500/20 text-pink-400">
-                <Rocket size={24} />
-              </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
+        {/* Carte principale */}
+        <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 border border-slate-200 dark:border-slate-800 shadow-xl">
+          <div className="flex items-center gap-4 mb-6">
+            <div className="p-3 rounded-2xl bg-gradient-to-r from-pink-500 to-purple-600 text-white">
+              <Sparkles size={28} />
+            </div>
+            <div>
+              <h3 className="text-2xl font-black text-slate-900 dark:text-white">Genesis Academy</h3>
+              <p className="text-sm text-pink-500 dark:text-pink-400 font-mono">Centre d'Accompagnement Scolaire</p>
+            </div>
+          </div>
+
+          <p className="text-slate-600 dark:text-slate-300 mb-6 leading-relaxed">
+            Fondé le <strong className="text-slate-900 dark:text-white">14 septembre 2026</strong> au{' '}
+            <strong className="text-slate-900 dark:text-white">Groupe Scolaire God's Time</strong> (sis à la Fabrique Ngousso),
+            Genesis Academy est un centre de répétition d'excellence. J'y encadre personnellement une équipe d'élèves
+            de la 6e en Terminale, alliant rigueur mathématique et transmission de savoirs technologiques.
+          </p>
+
+          <div className="space-y-4">
+            <div className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+              <BookOpen size={20} className="text-indigo-500 mt-0.5" />
               <div>
-                <h3 className="text-xl font-bold">Pourquoi Genesis ?</h3>
-                <span className="text-xs text-pink-400 font-mono">Innovation & Impact Local</span>
+                <h4 className="font-bold text-slate-900 dark:text-white">Premier Cycle (6e à 3e)</h4>
+                <p className="text-sm text-slate-600 dark:text-slate-400">Prise en charge de toutes les matières.</p>
               </div>
             </div>
 
-            <p className="text-sm leading-relaxed" style={{ color: 'var(--text-muted)' }}>
-              Genesis Academy incarne ma volonté d'utiliser mes competences tant sur le plan .......
-            </p>
-
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t" style={{ borderColor: 'var(--card-border)' }}>
-              <div className="flex items-start gap-3">
-                <Award size={20} className="text-indigo-400 shrink-0 mt-1" />
-                <div>
-                  <h4 className="text-sm font-bold">Mentorat & Tuteur</h4>
-                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Préparation rigoureuse aux examens officiels et formation pratique.</p>
-                </div>
+            <div className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+              <Award size={20} className="text-purple-500 mt-0.5" />
+              <div>
+                <h4 className="font-bold text-slate-900 dark:text-white">Second Cycle (2nde en Terminale)</h4>
+                <p className="text-sm text-slate-600 dark:text-slate-400">
+                  Mathématiques, Physique, Chimie, Informatique, et SVT (uniquement 1ère D & Tle D).
+                </p>
               </div>
-              <div className="flex items-start gap-3">
-                <Globe size={20} className="text-emerald-400 shrink-0 mt-1" />
-                <div>
-                  <h4 className="text-sm font-bold">Ancrage Culturel</h4>
-                  <p className="text-xs" style={{ color: 'var(--text-muted)' }}>Outils numériques pensés pour nos réalités locales et linguistiques.</p>
-                </div>
+            </div>
+
+            <div className="flex items-start gap-3 p-4 rounded-xl bg-slate-50 dark:bg-slate-800/50">
+              <MapPin size={20} className="text-emerald-500 mt-0.5" />
+              <div>
+                <h4 className="font-bold text-slate-900 dark:text-white">Lieu des cours</h4>
+                <p className="text-sm text-slate-600 dark:text-slate-400">
+                  Groupe Scolaire God's Time, Derrière la fabrique, Ngousso.
+                </p>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="lg:col-span-5 flex justify-center">
-          <div className="custom-card p-6 w-full max-w-sm rounded-3xl text-center relative overflow-hidden group border border-pink-500/20" style={{ background: 'var(--card-bg)' }}>
-            <div className="absolute inset-0 bg-gradient-to-b from-pink-500/10 via-transparent to-purple-500/10 pointer-events-none"></div>
-
-            <div className="relative z-10 space-y-4">
-              <span className="text-xs font-mono font-bold px-3 py-1 rounded-full bg-pink-500/20 text-pink-300">
-                OFFICIEL • FLYER GENESIS
-              </span>
-
-              <div className="h-80 w-full rounded-2xl bg-gradient-to-br from-slate-900 via-purple-950 to-indigo-950 border border-white/10 flex flex-col items-center justify-center p-6 relative overflow-hidden shadow-inner">
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-pink-500/10 via-transparent to-transparent"></div>
-                
-                <div className="relative z-10 space-y-3">
-                  <div className="w-16 h-16 mx-auto rounded-2xl bg-gradient-to-tr from-pink-500 to-indigo-500 flex items-center justify-center text-white shadow-xl font-black text-xl">
-                    G
-                  </div>
-                  <h4 className="text-lg font-black text-white tracking-wide">GENESIS INITIATIVE</h4>
-                  <p className="text-xs text-pink-200 font-mono">Innover, Entreprendre, Réussir.</p>
-                  <div className="pt-2">
-                    <span className="inline-block text-[10px] bg-black/40 px-3 py-1 rounded-full text-indigo-300 border border-white/10">
-                      Yaoundé • Ngousso
-                    </span>
-                  </div>
-                </div>
-              </div>
-
-              <a href="#contact" className="w-full btn-primary py-3 flex items-center justify-center gap-2 text-xs font-bold">
-                <Sparkles size={16} />
-                <span>Rejoindre ou Collaborer</span>
-              </a>
+        {/* Carte contacts */}
+        <div className="bg-gradient-to-br from-pink-500/10 via-purple-500/10 to-indigo-500/10 dark:from-pink-500/5 dark:via-purple-500/5 dark:to-indigo-500/5 rounded-3xl p-8 border border-pink-500/20 dark:border-pink-500/10">
+          <div className="flex items-center gap-3 mb-6">
+            <div className="p-3 rounded-2xl bg-pink-500/20 text-pink-500">
+              <Users size={24} />
             </div>
+            <div>
+              <h3 className="text-xl font-bold text-slate-900 dark:text-white">Contacts WhatsApp</h3>
+              <p className="text-sm text-slate-600 dark:text-slate-400">Contactez-nous directement</p>
+            </div>
+          </div>
+
+          <div className="space-y-4">
+            {contacts.map((contact, idx) => (
+              <a
+                key={idx}
+                href={`https://wa.me/237${contact.wa}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center justify-between p-4 rounded-xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 hover:border-emerald-500/50 dark:hover:border-emerald-500/50 transition-all group"
+              >
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-xl bg-emerald-500/10 text-emerald-500">
+                    <Phone size={18} />
+                  </div>
+                  <span className="font-bold text-slate-900 dark:text-white">{contact.number}</span>
+                </div>
+                <span className="text-xs font-mono text-emerald-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                  Ouvrir WhatsApp →
+                </span>
+              </a>
+            ))}
+          </div>
+
+          <div className="mt-8 p-4 rounded-xl bg-white/50 dark:bg-slate-900/50 border border-slate-200 dark:border-slate-800">
+            <p className="text-xs text-slate-600 dark:text-slate-400 text-center">
+              <strong className="text-slate-900 dark:text-white">Genesis Academy</strong> — Former la relève camerounaise avec excellence et discipline.
+            </p>
           </div>
         </div>
       </div>
